@@ -1,13 +1,23 @@
-# CHANGELOG
+# beaconRx - CHANGELOG
 
-### 2025-06-13
+notable changes will be documented.
 
+this project adheres to [semantic versioning](https://semver.org/spec/v2.0.0.html).
+
+
+## 2025-06-14
+
+- doc: added default header to 'CHANGELOG.md'. ;;;
+- doc: minor correction work on changelog formatting. ;;;
 - doc: minor changes to 'README.md' licensing section heading, for better clarification. ;;;
 - doc: added/fixed missing copyright info in 'LICENSE'. ;;;
+
+## 2025-06-13
+
 - doc: fixed missing 'initial commit' entry at the beginning of this changelog. ;;;
 - doc: fixed errors in the 'COPYRIGHT CONTEXT & LICENSE' part of the 'README.md'. ;;;
 
-### v0.0.1
+## v0.0.1
 
 - add: added username and passkey entry via cli arguments using argparse. ;;;
 - add: 'requirements.txt'. ;;;
