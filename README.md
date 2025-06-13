@@ -43,7 +43,10 @@ This hardware fingerprinting method provides a unique identifier for the system,
 
 Copyright 2025 - Robin Winkelmann | robinRx | rx-inference
 
-This fragment is part of the FragmentsRx suite, an open-source, AI-navigable library of functional code fragments. The entire suite is licensed under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. See the [LICENSE](https://github.com/rx-inference/fragmentsFx/blob/main/LICENSE) in the root of the project for details. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0.
+This repository, its software and all other associated material is licensed under Apache License, Version 2.0 (the "License").
+You may not use this file except in compliance with the License.
+See the [LICENSE](https://github.com/rx-inference/beaconRx/blob/main/LICENSE) in the root of this project for details.
+You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0.
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
