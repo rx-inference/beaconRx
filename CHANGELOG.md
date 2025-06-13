@@ -2,6 +2,7 @@
 
 ### 2025-06-13
 
+- doc: fixed missing 'initial commit' entry at the beginning of this changelog. ;;;
 - doc: fixed errors in the 'COPYRIGHT CONTEXT & LICENSE' part of the 'README.md'. ;;;
 
 ### v0.0.1
@@ -13,3 +14,4 @@
 - add: established basic project boilerplate ;;;
 - add: apache 2.0 license; file: 'LICENSE' ;;;
 - add: 'README.md' ;;;
+- add: initial commit. ;;;
