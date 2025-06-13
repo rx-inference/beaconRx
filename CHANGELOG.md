@@ -2,6 +2,8 @@
 
 ### 2025-06-13
 
+- doc: minor changes to 'README.md' licensing section heading, for better clarification. ;;;
+- doc: added/fixed missing copyright info in 'LICENSE'. ;;;
 - doc: fixed missing 'initial commit' entry at the beginning of this changelog. ;;;
 - doc: fixed errors in the 'COPYRIGHT CONTEXT & LICENSE' part of the 'README.md'. ;;;
 

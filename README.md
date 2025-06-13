@@ -39,7 +39,7 @@ The program outputs the following:
 
 This hardware fingerprinting method provides a unique identifier for the system, making it suitable for various applications such as system identification or verification.
 
-## COPYRIGHT CONTEXT & LICENSE
+## COPYRIGHT, CONTEXT, LICENSE & LIMMITATIONS
 
 Copyright 2025 - Robin Winkelmann | robinRx | rx-inference
 
