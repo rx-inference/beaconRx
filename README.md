@@ -24,21 +24,19 @@ Replace `<username>` and `<passkey>` with your desired values.
 1. The program collects detailed information about the system's hardware configuration.
 2. It generates a compact hardware string by concatenating the hardware information without spaces.
 3. The username and passkey provided as command-line arguments are added to the beginning of the hardware string.
-4. The program applies two secure hashing stages to the salted hardware string:
-   * SHA-256 hashing
-   * PBKDF2 key stretching with 100,000 iterations using the username and passkey as salt
+4. The program applies PBKDF2 key stretching with 100,000 iterations using the username and passkey as salt.
 5. The program displays the collected hardware information, the compact hardware string, and the results of the hashing stages.
 
 ### Output
 
 The program outputs the following:
 * System hardware configuration information
-* Compact hardware string (including username and passkey)
-* PBKDF2 hash (with 100,000 iterations) of the SHA-256 hash
+* Compact hardware string (including username and passkey) *only in --debug mode.
+* PBKDF2 hash (with 100,000 iterations)
 
 This hardware fingerprinting method provides a unique identifier for the system, making it suitable for various applications such as system identification or verification.
 
-## COPYRIGHT, CONTEXT, LICENSE & LIMMITATIONS
+## COPYRIGHT, CONTEXT, LICENSE & LIMITATIONS
 
 Copyright 2025 - Robin Winkelmann | robinRx | rx-inference
 

@@ -9,6 +9,7 @@ this project adheres to [semantic versioning](https://semver.org/spec/v2.0.0.htm
 ## v0.0.5
 
 - add: added debug argument to show compact hardware string, for inspection purpose. ;;;
+- doc: minor error corrections in 'README.md'. ;;;
 
 ## v0.0.4
 
