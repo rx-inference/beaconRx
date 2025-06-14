@@ -197,6 +197,7 @@ Options:
   --help, -h          Show this help message and exit.
   --username, -u      Preferred username (0-9, a-z, A-Z)
   --passkey, -p       Preferred passkey (0-9, a-z, A-Z)
+  --debug, -d         Show debug information
  
 Examples:
   python beaconRx_fingerprint.py --username john --passkey mypass123
@@ -258,7 +259,7 @@ Examples:
         sys.exit(1)
     
     # Check for unrecognized arguments
-    valid_args = ['--username', '-u', '--passkey', '-p', '--help', '-h']
+    valid_args = ['--username', '-u', '--passkey', '-p', '--help', '-h', '--debug', '-d']
     for arg in sys.argv[1:]:
         if arg.startswith('-') and arg not in valid_args:
             print("Error: Invalid input.")
@@ -269,6 +270,7 @@ Examples:
     parser = argparse.ArgumentParser(add_help=False, exit_on_error=False)
     parser.add_argument('--username', '-u', required=True, help=argparse.SUPPRESS)
     parser.add_argument('--passkey', '-p', required=True, help=argparse.SUPPRESS)
+    parser.add_argument('--debug', '-d', action='store_true', help=argparse.SUPPRESS)
     
     try:
         args = parser.parse_args()
@@ -326,10 +328,14 @@ Examples:
 
     # Generate compact hardware string
     hardware_string = generate_hardware_string(username, passkey)
-    print("=== COMPACT HARDWARE STRING ===")
-    print()
-    print(hardware_string)
-    print()
+    
+    # === DEBUG SECTION ===
+    if args.debug:
+        print("=== COMPACT HARDWARE STRING ===")
+        print()
+        print(hardware_string)
+        print()
+    # === END DEBUG SECTION ===
 
     # Apply secure fingerprinting
     result = secure_fingerprint(hardware_string, username, passkey)

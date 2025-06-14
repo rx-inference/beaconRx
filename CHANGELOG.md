@@ -6,11 +6,15 @@ this project adheres to [semantic versioning](https://semver.org/spec/v2.0.0.htm
 
 ## 2025-06-14
 
+## v0.0.5
+
+- add: added debug argument to show compact hardware string, for inspection purpose. ;;;
+
 ## v0.0.4
 
 - sec: added input sanitization of username and passkey. only 0-9, a-z, A-Z allowed. ;;;
 - sec: added extensive error handling. ;;;
-- mod: refactored running process info message; better formatting and clarity. ;;;
+- mod: refactored process info message; better formatting and clarity. ;;;
 - mod: added possibility to call help with '-h' argument and refined cli help message for better clarity. ;;;
 - mod: removed trivial sha256 pre hashing function. ;;;
 - doc: added default header to 'CHANGELOG.md'. ;;;
