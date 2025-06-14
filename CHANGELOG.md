@@ -4,9 +4,14 @@ notable changes will be documented.
 
 this project adheres to [semantic versioning](https://semver.org/spec/v2.0.0.html).
 
-
 ## 2025-06-14
 
+## v0.0.4
+
+- sec: added input sanitization of username and passkey. only 0-9, a-z, A-Z allowed. ;;;
+- sec: added extensive error handling. ;;;
+- mod: added possibility to call help with '-h' argument and refined cli help message for better clarity. ;;;
+- mod: removed trivial sha256 pre hashing function. ;;;
 - doc: added default header to 'CHANGELOG.md'. ;;;
 - doc: minor correction work on changelog formatting. ;;;
 - doc: minor changes to 'README.md' licensing section heading, for better clarification. ;;;

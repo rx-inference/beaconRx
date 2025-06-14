@@ -34,7 +34,6 @@ Replace `<username>` and `<passkey>` with your desired values.
 The program outputs the following:
 * System hardware configuration information
 * Compact hardware string (including username and passkey)
-* SHA-256 hash of the salted hardware string
 * PBKDF2 hash (with 100,000 iterations) of the SHA-256 hash
 
 This hardware fingerprinting method provides a unique identifier for the system, making it suitable for various applications such as system identification or verification.

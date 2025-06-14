@@ -6,6 +6,8 @@ import platform
 import psutil
 import subprocess
 import argparse
+import sys
+import re
 
 def get_cpu_info():
     """retrieves cpu model and core count"""
@@ -159,19 +161,14 @@ def generate_hardware_string(username, passkey):
 
     return ''.join(components)
 
-def secure_fingerprint_stages(hardware_string, username, passkey):
+def secure_fingerprint(hardware_string, username, passkey):
     """applies secure hashing to hardware string"""
     results = {}
 
-    # 1. SHA-256 hashing
-    salted_hardware_string = f"{username}{hardware_string}{passkey}"
-    hash1 = hashlib.sha256(salted_hardware_string.encode()).hexdigest()
-    results['sha256_hash'] = hash1
-
-    # 2. PBKDF2 key stretching with 100,000 iterations
+    # PBKDF2 key stretching with 100,000 iterations
     pbkdf2_hash = hashlib.pbkdf2_hmac(
         'sha256',
-        hash1.encode(),
+        hardware_string.encode(),
         (username + passkey).encode(),  # Using username and passkey as salt
         100000
     ).hex()
@@ -179,11 +176,111 @@ def secure_fingerprint_stages(hardware_string, username, passkey):
 
     return results
 
+def sanitize_input(value, field_name):
+    """sanitizes input to allow only alphanumeric characters"""
+    if not re.match(r'^[a-zA-Z0-9]+$', value):
+        print("Error: Only 0-9, a-z, A-Z are allowed in usernames and passkeys.")
+        print("Usage: beaconRx_fingerprint.py -u USERNAME -p PASSKEY")
+        print("Use --help for more information.")
+        sys.exit(1)
+    return value
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Generate hardware fingerprint')
-    parser.add_argument('--username', required=True, help='Username for salting')
-    parser.add_argument('--passkey', required=True, help='Passkey for salting')
-    args = parser.parse_args()
+    # Custom help message
+    help_message = """
+beaconFx_fingerprint v.0.0.4 - Rx Hardware Fingerprint Generator
+
+Usage:
+  beaconRx_fingerprint.py --username USERNAME --passkey PASSKEY
+
+Options:
+  --help, -h          Show this help message and exit.
+  --username, -u      Preferred username (0-9, a-z, A-Z)
+  --passkey, -p       Preferred passkey (0-9, a-z, A-Z)
+ 
+Examples:
+  python beaconRx_fingerprint.py --username john --passkey mypass123
+  python beaconRx_fingerprint.py -u alice -p secretkey
+"""
+
+    # Check for help first
+    if '--help' in sys.argv or '-h' in sys.argv:
+        print(help_message)
+        sys.exit(0)
+    
+    # Check if no arguments
+    if len(sys.argv) == 1:
+        print("Error: Username and passkey are required.")
+        print("Usage: beaconRx_fingerprint.py -u USERNAME -p PASSKEY")
+        print("Use --help for more information.")
+        sys.exit(1)
+    
+    # Check for duplicate arguments
+    username_count = sys.argv.count('-u') + sys.argv.count('--username')
+    passkey_count = sys.argv.count('-p') + sys.argv.count('--passkey')
+    
+    if username_count > 1 or passkey_count > 1:
+        print("Error: Invalid input.")
+        print("Usage: beaconRx_fingerprint.py -u USERNAME -p PASSKEY")
+        print("Use --help for more information.")
+        sys.exit(1)
+    
+    # Check for missing values after -u or -p
+    args_list = sys.argv[1:]
+    for i, arg in enumerate(args_list):
+        if arg in ['-u', '--username']:
+            if i + 1 >= len(args_list) or args_list[i + 1].startswith('-'):
+                print("Error: Username missing.")
+                print("Usage: beaconRx_fingerprint.py -u USERNAME -p PASSKEY")
+                print("Use --help for more information.")
+                sys.exit(1)
+        elif arg in ['-p', '--passkey']:
+            if i + 1 >= len(args_list) or args_list[i + 1].startswith('-'):
+                print("Error: Passkey missing.")
+                print("Usage: beaconRx_fingerprint.py -u USERNAME -p PASSKEY")
+                print("Use --help for more information.")
+                sys.exit(1)
+    
+    # Check for specific missing arguments
+    has_username = any(arg in ['--username', '-u'] for arg in sys.argv)
+    has_passkey = any(arg in ['--passkey', '-p'] for arg in sys.argv)
+    
+    if not has_username and has_passkey:
+        print("Error: Username missing.")
+        print("Usage: beaconRx_fingerprint.py -u USERNAME -p PASSKEY")
+        print("Use --help for more information.")
+        sys.exit(1)
+    
+    if has_username and not has_passkey:
+        print("Error: Passkey missing.")
+        print("Usage: beaconRx_fingerprint.py -u USERNAME -p PASSKEY")
+        print("Use --help for more information.")
+        sys.exit(1)
+    
+    # Check for unrecognized arguments
+    valid_args = ['--username', '-u', '--passkey', '-p', '--help', '-h']
+    for arg in sys.argv[1:]:
+        if arg.startswith('-') and arg not in valid_args:
+            print("Error: Invalid input.")
+            print("Usage: beaconRx_fingerprint.py -u USERNAME -p PASSKEY")
+            print("Use --help for more information.")
+            sys.exit(1)
+    
+    parser = argparse.ArgumentParser(add_help=False, exit_on_error=False)
+    parser.add_argument('--username', '-u', required=True, help=argparse.SUPPRESS)
+    parser.add_argument('--passkey', '-p', required=True, help=argparse.SUPPRESS)
+    
+    try:
+        args = parser.parse_args()
+    except:
+        print("Error: Invalid input.")
+        print("Usage: beaconRx_fingerprint.py -u USERNAME -p PASSKEY")
+        print("Use --help for more information.")
+        sys.exit(1)
+    
+    # Sanitize inputs
+    username = sanitize_input(args.username, "Username")
+    passkey = sanitize_input(args.passkey, "Passkey")
 
     print("=== SYSTEM HARDWARE CONFIGURATION ===")
 
@@ -220,16 +317,13 @@ if __name__ == "__main__":
     print(f"BIOS: {mobo['bios']}")
 
     # Generate compact hardware string
-    hardware_string = generate_hardware_string(args.username, args.passkey)
+    hardware_string = generate_hardware_string(username, passkey)
     print("\nCOMPACT HARDWARE STRING:")
     print(hardware_string)
 
-    # Apply secure fingerprinting stages
-    stages = secure_fingerprint_stages(hardware_string, args.username, args.passkey)
+    # Apply secure fingerprinting
+    result = secure_fingerprint(hardware_string, username, passkey)
 
-    print("\nSECURE FINGERPRINTING STAGES:")
-    print("1. SHA-256 Hash:")
-    print(stages['sha256_hash'])
-
-    print("\n2. PBKDF2 Hash (100,000 iterations):")
-    print(stages['pbkdf2_hash'])
+    print("\nSECURE FINGERPRINT:")
+    print("PBKDF2 Hash (100,000 iterations):")
+    print(result['pbkdf2_hash'])
