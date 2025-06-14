@@ -188,7 +188,7 @@ def sanitize_input(value, field_name):
 if __name__ == "__main__":
     # Custom help message
     help_message = """
-beaconFx_fingerprint v.0.0.4 - Rx Hardware Fingerprint Generator
+beaconRx_fingerprint v.0.0.4 - Rx Hardware Fingerprint Generator
 
 Usage:
   beaconRx_fingerprint.py --username USERNAME --passkey PASSKEY
@@ -282,10 +282,16 @@ Examples:
     username = sanitize_input(args.username, "Username")
     passkey = sanitize_input(args.passkey, "Passkey")
 
+    print()
+    print("beaconRx_fingerprint v.0.0.4 - Rx Hardware Fingerprint Generator")
+    print()
+    print()
+
     print("=== SYSTEM HARDWARE CONFIGURATION ===")
+    print()
 
     cpu = get_cpu_info()
-    print(f"\nCPU: {cpu['model']}")
+    print(f"CPU: {cpu['model']}")
     print(f"Physical cores: {cpu['cores']}")
     print(f"Logical cores: {cpu['logical_cores']}")
 
@@ -315,15 +321,21 @@ Examples:
     print("\nMOTHERBOARD & BIOS:")
     print(f"Board: {mobo['motherboard']}")
     print(f"BIOS: {mobo['bios']}")
+    print()
+    print()
 
     # Generate compact hardware string
     hardware_string = generate_hardware_string(username, passkey)
-    print("\nCOMPACT HARDWARE STRING:")
+    print("=== COMPACT HARDWARE STRING ===")
+    print()
     print(hardware_string)
+    print()
 
     # Apply secure fingerprinting
     result = secure_fingerprint(hardware_string, username, passkey)
 
-    print("\nSECURE FINGERPRINT:")
+    print("=== SECURE FINGERPRINT ===")
+    print()
     print("PBKDF2 Hash (100,000 iterations):")
     print(result['pbkdf2_hash'])
+    print()
